@@ -1,0 +1,47 @@
+<section class="section">
+  <div class="page-shell">
+    <div class="checkout-card panel">
+      <div>
+        <p class="eyebrow">Delivery Information</p>
+        <h1 class="section-heading">Checkout</h1>
+      </div>
+
+      <form class="form-grid" [formGroup]="form" (ngSubmit)="continueToPayment()">
+        <label>
+          <span>Name</span>
+          <input class="field" formControlName="name" type="text">
+        </label>
+        <label>
+          <span>Phone</span>
+          <input class="field" formControlName="phone" type="tel">
+        </label>
+        <label>
+          <span>Email</span>
+          <input class="field" formControlName="email" type="email">
+        </label>
+        <label>
+          <span>Address</span>
+          <textarea class="field" formControlName="address" rows="4"></textarea>
+        </label>
+        <label>
+          <span>City</span>
+          <input class="field" formControlName="city" type="text">
+        </label>
+        <label>
+          <span>State</span>
+          <input class="field" formControlName="state" type="text">
+        </label>
+        <label>
+          <span>Country</span>
+          <input class="field" formControlName="country" type="text">
+        </label>
+        <label>
+          <span>Pincode</span>
+          <input class="field" formControlName="pincode" type="text">
+        </label>
+
+        <button type="submit" class="btn-primary">Continue to Payment</button>
+      </form>
+    </div>
+  </div>
+</section>

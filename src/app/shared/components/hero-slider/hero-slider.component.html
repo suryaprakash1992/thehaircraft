@@ -1,0 +1,28 @@
+<section class="hero panel">
+  <img class="hero-image" [src]="activeSlide().image" [alt]="activeSlide().title">
+  <div class="overlay"></div>
+  <div class="content page-shell">
+    <div class="copy fade-up">
+      <p class="eyebrow">{{ activeSlide().eyebrow }}</p>
+      <h1 class="display-title">
+        {{ activeSlide().title }}
+        <span>{{ activeSlide().emphasis }}</span>
+      </h1>
+      <p class="section-copy">{{ activeSlide().copy }}</p>
+      <div class="actions">
+        <a routerLink="/products" class="btn-primary">Shop Collection</a>
+        <a routerLink="/blog" class="btn-secondary">View Journal</a>
+      </div>
+    </div>
+    <div class="pills">
+      @for (slide of slides; track slide.id; let index = $index) {
+        <button
+          type="button"
+          [class.active]="index === activeIndex()"
+          (click)="select(index)"
+          aria-label="Select hero slide"
+        ></button>
+      }
+    </div>
+  </div>
+</section>

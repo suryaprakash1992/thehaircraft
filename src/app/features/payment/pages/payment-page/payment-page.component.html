@@ -1,0 +1,31 @@
+<section class="section">
+  <div class="page-shell payment-grid">
+    <div class="panel details">
+      <p class="eyebrow">Payment Gateway</p>
+      <h1 class="section-heading">Razorpay Checkout</h1>
+      <p class="section-copy">
+        This production-ready architecture leaves a clean seam to replace the mocked trigger below with the official Razorpay checkout script when you connect your merchant account.
+      </p>
+      <ul>
+        <li>Order data persisted to Firestore</li>
+        <li>Supports cart to checkout to payment to success flow</li>
+        <li>Guarded against empty-cart access</li>
+      </ul>
+      <button type="button" class="btn-primary" (click)="payNow()" [disabled]="processing()">
+        {{ processing() ? 'Processing...' : 'Pay Securely' }}
+      </button>
+    </div>
+
+    <aside class="panel summary">
+      <h2>Payable Summary</h2>
+      <div>
+        <span>Items</span>
+        <strong>{{ cartService.summary().itemCount }}</strong>
+      </div>
+      <div>
+        <span>Total</span>
+        <strong>{{ cartService.summary().total | currency:'USD':'symbol':'1.0-0' }}</strong>
+      </div>
+    </aside>
+  </div>
+</section>

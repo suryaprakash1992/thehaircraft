@@ -1,0 +1,11 @@
+<div class="auth-form">
+  <p class="eyebrow">Create Account</p>
+  <h2 class="section-heading">Signup</h2>
+  <form [formGroup]="form" (ngSubmit)="signUp()">
+    <label><span>Full Name</span><input class="field" formControlName="displayName" type="text"></label>
+    <label><span>Email</span><input class="field" formControlName="email" type="email"></label>
+    <label><span>Password</span><input class="field" formControlName="password" type="password"></label>
+    <button type="submit" class="btn-primary">Create Account</button>
+  </form>
+  <p>Already have an account? <a routerLink="/auth/signin">Signin</a></p>
+</div>

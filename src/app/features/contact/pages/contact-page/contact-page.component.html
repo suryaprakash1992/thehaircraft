@@ -1,0 +1,28 @@
+<section class="section">
+  <div class="page-shell contact-grid">
+    <div>
+      <p class="eyebrow">Get in Touch</p>
+      <h1 class="section-heading">Talk to THEHAIRCRAFT</h1>
+      <p class="section-copy">
+        Use this contact flow for direct-to-consumer inquiries, wholesale leads, salon partnerships, and consultation requests.
+      </p>
+      <div class="info panel">
+        <p>support@thehaircraft.com</p>
+        <p>+91 98817 35497</p>
+        <p>Chennai, India</p>
+      </div>
+    </div>
+
+    <form class="panel form" [formGroup]="form" (ngSubmit)="submit()">
+      <label><span>Name</span><input class="field" formControlName="name" type="text"></label>
+      <label><span>Email</span><input class="field" formControlName="email" type="email"></label>
+      <label><span>Phone</span><input class="field" formControlName="phone" type="text"></label>
+      <label><span>Subject</span><input class="field" formControlName="subject" type="text"></label>
+      <label><span>Message</span><textarea class="field" formControlName="message" rows="5"></textarea></label>
+      <button type="submit" class="btn-primary">Send Message</button>
+      @if (submitted()) {
+        <p class="success">Thanks. Your message has been queued for follow-up.</p>
+      }
+    </form>
+  </div>
+</section>

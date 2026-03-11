@@ -1,0 +1,70 @@
+<section class="section">
+  <div class="page-shell">
+    <app-section-title
+      eyebrow="Shop Collection"
+      title="Premium hair, built for conversion and repeat clients."
+      description="Enterprise-friendly filters, search, sort, and pagination are included here as the foundation for a scalable catalogue."
+    />
+
+    <div class="catalogue">
+      <aside class="filters panel">
+        <label>
+          <span>Search</span>
+          <input class="field" type="search" [value]="search()" (input)="search.set($any($event.target).value)">
+        </label>
+
+        <label>
+          <span>Category</span>
+          <select class="field" [value]="category()" (change)="category.set($any($event.target).value)">
+            <option value="All">All</option>
+            @for (categoryOption of productService.categories(); track categoryOption) {
+              <option [value]="categoryOption">{{ categoryOption }}</option>
+            }
+          </select>
+        </label>
+
+        <label>
+          <span>Max Price: {{ maxPrice() | currency:'USD':'symbol':'1.0-0' }}</span>
+          <input
+            type="range"
+            min="100"
+            max="500"
+            step="25"
+            [value]="maxPrice()"
+            (input)="maxPrice.set(+$any($event.target).value)"
+          >
+        </label>
+
+        <label>
+          <span>Sort By</span>
+          <select class="field" [value]="sort()" (change)="sort.set($any($event.target).value)">
+            <option value="featured">Featured</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+          </select>
+        </label>
+      </aside>
+
+      <div class="results">
+        <div class="results-bar">
+          <p>{{ filteredProducts().length }} products found</p>
+          <a routerLink="/contact" class="btn-secondary">Need bulk pricing?</a>
+        </div>
+
+        <div class="grid-auto">
+          @for (product of paginatedProducts(); track product.id) {
+            <app-product-card [product]="product" />
+          }
+        </div>
+
+        <div class="pagination">
+          @for (pageNumber of pageNumbers(); track pageNumber) {
+            <button type="button" [class.active]="page() === pageNumber" (click)="setPage(pageNumber)">
+              {{ pageNumber }}
+            </button>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

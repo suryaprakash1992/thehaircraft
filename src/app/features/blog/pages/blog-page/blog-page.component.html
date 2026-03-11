@@ -1,0 +1,23 @@
+<section class="section">
+  <div class="page-shell">
+    <app-section-title
+      eyebrow="Content Commerce"
+      title="The Hair Journal"
+      description="A blog structure designed for educational content, authority building, and organic discovery."
+    />
+
+    <div class="blog-grid">
+      @for (post of blogService.posts(); track post.id) {
+        <article class="panel post">
+          <img [src]="post.coverImage" [alt]="post.title" loading="lazy">
+          <div>
+            <p class="eyebrow">{{ post.category }}</p>
+            <h3>{{ post.title }}</h3>
+            <p class="section-copy">{{ post.summary }}</p>
+            <span>{{ post.readTime }}</span>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>

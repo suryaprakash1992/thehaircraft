@@ -1,0 +1,9 @@
+<header class="section-title" [class.center]="align() === 'center'">
+  @if (eyebrow()) {
+    <p class="eyebrow">{{ eyebrow() }}</p>
+  }
+  <h2 class="section-heading">{{ title() }}</h2>
+  @if (description()) {
+    <p class="section-copy">{{ description() }}</p>
+  }
+</header>

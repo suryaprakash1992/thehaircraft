@@ -1,0 +1,18 @@
+.blog-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.post {
+  overflow: hidden;
+}
+
+.post img {
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  object-fit: cover;
+}
+
+.post div {
+  padding: 1.25rem;
+}

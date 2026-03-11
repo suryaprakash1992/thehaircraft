@@ -1,0 +1,17 @@
+.progress {
+  position: fixed;
+  inset: 5rem 0 auto;
+  height: 3px;
+  z-index: 21;
+  background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
+  animation: progress 1s linear infinite;
+}
+
+@keyframes progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}

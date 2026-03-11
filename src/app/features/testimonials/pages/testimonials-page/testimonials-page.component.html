@@ -1,0 +1,20 @@
+<section class="section">
+  <div class="page-shell">
+    <app-section-title
+      eyebrow="Client Experience"
+      title="Trusted by clients, brides, and salon partners."
+      description="This page is ready for Firestore-backed testimonials, star ratings, and richer UGC blocks."
+    />
+
+    <div class="grid-auto">
+      @for (testimonial of testimonials; track testimonial.id) {
+        <article class="panel testimonial-card">
+          <img [src]="testimonial.image" [alt]="testimonial.name">
+          <blockquote>{{ testimonial.quote }}</blockquote>
+          <strong>{{ testimonial.name }}</strong>
+          <span>{{ testimonial.role }}</span>
+        </article>
+      }
+    </div>
+  </div>
+</section>

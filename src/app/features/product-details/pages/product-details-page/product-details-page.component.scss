@@ -1,0 +1,98 @@
+.details-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 1.5rem;
+}
+
+.hero-image {
+  overflow: hidden;
+}
+
+.hero-image img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transition: transform 220ms ease;
+}
+
+.hero-image img:hover {
+  transform: scale(1.08);
+}
+
+.thumbs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.thumb {
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.thumb img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.content {
+  display: grid;
+  gap: 1.2rem;
+  padding: 1.5rem;
+}
+
+.price {
+  margin: 0;
+  color: var(--color-gold);
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.lengths {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.lengths div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.lengths button {
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: white;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+}
+
+.lengths button.active {
+  background: var(--color-gold);
+  color: var(--color-black);
+}
+
+.review-card {
+  padding: 1.2rem;
+}
+
+.reviews {
+  display: grid;
+  gap: 1rem;
+}
+
+.surface {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+@media (max-width: 900px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}

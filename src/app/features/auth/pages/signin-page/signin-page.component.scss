@@ -1,0 +1,14 @@
+.auth-form,
+.auth-form form {
+  display: grid;
+  gap: 1rem;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 0.5rem;
+}
+
+a {
+  color: var(--color-gold);
+}

@@ -1,0 +1,17 @@
+<article class="product-card panel fade-up">
+  <a [routerLink]="['/products', product().slug]" class="media">
+    <img [src]="product().heroImage" [alt]="product().name" loading="lazy">
+  </a>
+  <div class="content">
+    <div class="meta">
+      <span>{{ product().category }}</span>
+      <span>{{ product().texture }}</span>
+    </div>
+    <a [routerLink]="['/products', product().slug]" class="title">{{ product().name }}</a>
+    <p class="summary">{{ product().shortDescription }}</p>
+    <div class="footer">
+      <strong>{{ (product().salePrice ?? product().price) | currency:'USD':'symbol':'1.0-0' }}</strong>
+      <button type="button" class="btn-ghost" (click)="addToCart()">Quick Add</button>
+    </div>
+  </div>
+</article>

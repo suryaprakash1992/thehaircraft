@@ -1,0 +1,57 @@
+<section class="section">
+  <div class="page-shell cart-grid">
+    <div class="items">
+      <h1 class="section-heading">Shopping Cart</h1>
+      @if (cartService.items().length) {
+        @for (item of cartService.items(); track item.productId + item.selectedLength) {
+          <article class="cart-item panel">
+            <img [src]="item.product.heroImage" [alt]="item.product.name">
+            <div>
+              <h3>{{ item.product.name }}</h3>
+              <p class="section-copy">Length: {{ item.selectedLength }}</p>
+              <strong>{{ (item.product.salePrice ?? item.product.price) | currency:'USD':'symbol':'1.0-0' }}</strong>
+            </div>
+            <div class="actions">
+              <input
+                class="field"
+                type="number"
+                min="1"
+                [value]="item.quantity"
+                (input)="cartService.updateQuantity(item.productId, item.selectedLength, +$any($event.target).value)"
+              >
+              <button type="button" class="btn-secondary" (click)="cartService.removeItem(item.productId, item.selectedLength)">
+                Remove
+              </button>
+            </div>
+          </article>
+        }
+      } @else {
+        <div class="panel empty-state">
+          <p class="section-copy">Your cart is empty.</p>
+          <a routerLink="/products" class="btn-primary">Browse Products</a>
+        </div>
+      }
+    </div>
+
+    <aside class="summary panel">
+      <h2>Order Summary</h2>
+      <div>
+        <span>Subtotal</span>
+        <strong>{{ cartService.summary().subtotal | currency:'USD':'symbol':'1.0-0' }}</strong>
+      </div>
+      <div>
+        <span>Shipping</span>
+        <strong>{{ cartService.summary().shipping | currency:'USD':'symbol':'1.0-0' }}</strong>
+      </div>
+      <div>
+        <span>Tax</span>
+        <strong>{{ cartService.summary().tax | currency:'USD':'symbol':'1.0-0' }}</strong>
+      </div>
+      <div class="total">
+        <span>Total</span>
+        <strong>{{ cartService.summary().total | currency:'USD':'symbol':'1.0-0' }}</strong>
+      </div>
+      <a routerLink="/checkout" class="btn-primary">Proceed to Checkout</a>
+    </aside>
+  </div>
+</section>

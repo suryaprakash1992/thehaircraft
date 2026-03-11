@@ -1,0 +1,18 @@
+.testimonial-card {
+  padding: 1.5rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.testimonial-card img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.testimonial-card blockquote {
+  margin: 0;
+  font-family: 'Playfair Display', serif;
+  line-height: 1.6;
+}

@@ -1,0 +1,68 @@
+.catalogue {
+  display: grid;
+  grid-template-columns: minmax(240px, 280px) 1fr;
+  gap: 1.5rem;
+}
+
+.filters,
+.results-bar {
+  padding: 1.25rem;
+}
+
+.filters {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+  position: sticky;
+  top: 6rem;
+}
+
+.filters label {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.results {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.pagination {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.pagination button {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background: var(--color-gold);
+  color: var(--color-black);
+}
+
+@media (max-width: 920px) {
+  .catalogue {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    position: static;
+  }
+}

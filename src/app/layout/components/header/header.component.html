@@ -1,0 +1,57 @@
+<header class="header">
+  <div class="page-shell header-bar">
+    <a routerLink="/" class="brand">
+      <span class="gem">◆</span>
+      <span>THEHAIRCRAFT</span>
+    </a>
+
+    <nav class="nav desktop-nav">
+      <div class="mega-group">
+        <a routerLink="/products" routerLinkActive="active">Hair Extensions</a>
+        <div class="mega-menu panel">
+          @for (category of categories(); track category) {
+            <a routerLink="/products" [queryParams]="{ category }">{{ category }}</a>
+          }
+        </div>
+      </div>
+      <a routerLink="/products" routerLinkActive="active">Wigs</a>
+      <a routerLink="/testimonials" routerLinkActive="active">Testimonials</a>
+      <a routerLink="/blog" routerLinkActive="active">Blog</a>
+      <a routerLink="/contact" routerLinkActive="active">Contact</a>
+    </nav>
+
+    <form class="search desktop-search" (submit)="runSearch($event)">
+      <input
+        class="field"
+        type="search"
+        placeholder="Search luxury hair..."
+        [value]="searchTerm()"
+        (input)="searchTerm.set(($any($event.target).value ?? '').trim())"
+      >
+    </form>
+
+    <div class="actions">
+      <a routerLink="/auth/signin">{{ authService.isAuthenticated() ? 'Account' : 'Signin' }}</a>
+      <a routerLink="/cart">Cart <span>{{ cartCount() }}</span></a>
+      <button type="button" class="menu-toggle" (click)="toggleMenu()">Menu</button>
+    </div>
+  </div>
+
+  @if (mobileMenuOpen()) {
+    <div class="mobile-nav panel">
+      <form class="search" (submit)="runSearch($event)">
+        <input
+          class="field"
+          type="search"
+          placeholder="Search luxury hair..."
+          [value]="searchTerm()"
+          (input)="searchTerm.set(($any($event.target).value ?? '').trim())"
+        >
+      </form>
+      <a routerLink="/products" (click)="toggleMenu()">Products</a>
+      <a routerLink="/testimonials" (click)="toggleMenu()">Testimonials</a>
+      <a routerLink="/blog" (click)="toggleMenu()">Blog</a>
+      <a routerLink="/contact" (click)="toggleMenu()">Contact</a>
+    </div>
+  }
+</header>

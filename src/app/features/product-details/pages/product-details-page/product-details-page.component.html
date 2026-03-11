@@ -1,0 +1,73 @@
+@if (product; as selectedProduct) {
+  <section class="section">
+    <div class="page-shell details-grid">
+      <div class="gallery">
+        <div class="hero-image panel">
+          <img [src]="activeImage() || selectedProduct.images[0]" [alt]="selectedProduct.name">
+        </div>
+        <div class="thumbs">
+          @for (image of selectedProduct.images; track image) {
+            <button type="button" class="thumb" (click)="activeImage.set(image)">
+              <img [src]="image" [alt]="selectedProduct.name">
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="content panel">
+        <p class="eyebrow">{{ selectedProduct.category }}</p>
+        <h1 class="section-heading">{{ selectedProduct.name }}</h1>
+        <p class="price">{{ (selectedProduct.salePrice ?? selectedProduct.price) | currency:'USD':'symbol':'1.0-0' }}</p>
+        <p class="section-copy">{{ selectedProduct.description }}</p>
+
+        <div class="lengths">
+          <span>Select Length</span>
+          <div>
+            @for (length of selectedProduct.lengthOptions; track length) {
+              <button type="button" [class.active]="selectedLength() === length" (click)="selectedLength.set(length)">
+                {{ length }}
+              </button>
+            }
+          </div>
+        </div>
+
+        <ul>
+          @for (feature of selectedProduct.features; track feature) {
+            <li>{{ feature }}</li>
+          }
+        </ul>
+
+        <div class="actions">
+          <button type="button" class="btn-primary" (click)="addToCart()">Add to Cart</button>
+          <button type="button" class="btn-secondary">Book Consultation</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section surface">
+    <div class="page-shell">
+      <h2 class="section-heading">Client Reviews</h2>
+      <div class="reviews">
+        @for (review of selectedProduct.reviews; track review.id) {
+          <article class="panel review-card">
+            <strong>{{ review.title }}</strong>
+            <p class="section-copy">{{ review.comment }}</p>
+            <span>{{ review.author }}</span>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="page-shell">
+      <h2 class="section-heading">Related Products</h2>
+      <div class="grid-auto">
+        @for (relatedProduct of relatedProducts(); track relatedProduct.id) {
+          <app-product-card [product]="relatedProduct" />
+        }
+      </div>
+    </div>
+  </section>
+}

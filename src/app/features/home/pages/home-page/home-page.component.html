@@ -1,0 +1,103 @@
+<app-hero-slider />
+
+<section class="section">
+  <div class="page-shell">
+    <app-section-title
+      eyebrow="Curated Categories"
+      title="The Essentials"
+      description="From temple-sourced bundles to invisible lace finishes, shop the core pieces behind the THEHAIRCRAFT signature."
+      align="center"
+    />
+
+    <div class="category-grid">
+      @for (category of categories; track category.id) {
+        <a class="category-card panel fade-up" routerLink="/products" [queryParams]="{ category: category.title }">
+          <img [src]="category.image" [alt]="category.title" loading="lazy">
+          <div class="overlay">
+            <h3>{{ category.title }}</h3>
+            <span>Shop now</span>
+          </div>
+        </a>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section surface">
+  <div class="page-shell">
+    <app-section-title
+      eyebrow="Top Rated"
+      title="The Bestsellers"
+      description="High-conversion hero products built to anchor a premium hair ecommerce business."
+    />
+
+    <div class="grid-auto">
+      @for (product of productService.bestsellerProducts(); track product.id) {
+        <app-product-card [product]="product" />
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="page-shell story panel">
+    <img
+      src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=80"
+      alt="Premium straight hair texture"
+    >
+    <div>
+      <p class="eyebrow">Quality First</p>
+      <h2 class="section-heading">Our Legacy of Excellence</h2>
+      <p class="section-copy">
+        At THEHAIRCRAFT, we curate exceptional textures, finish each order with strict quality control, and build the experience around trust, care, and repeat business.
+      </p>
+      <ul>
+        <li>Temple sourced raw hair with cuticle alignment</li>
+        <li>Zero chemical processing for longevity</li>
+        <li>Salon-grade packaging and dispatch standards</li>
+      </ul>
+      <a routerLink="/contact" class="btn-primary">Learn about our process</a>
+    </div>
+  </div>
+</section>
+
+<section class="section quote-section">
+  <div class="page-shell quote-card">
+    <span class="quote-mark">"</span>
+    <blockquote>{{ testimonials[0].quote }}</blockquote>
+    <p>{{ testimonials[0].name }} · {{ testimonials[0].role }}</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="page-shell">
+    <app-section-title
+      eyebrow="The Hair Journal"
+      title="Editorial content that builds trust and organic growth."
+      description="A blog framework is included so the storefront can grow into a full content-led commerce platform."
+    />
+
+    <div class="blog-grid">
+      @for (post of blogService.latestPosts(); track post.id) {
+        <article class="blog-card panel">
+          <img [src]="post.coverImage" [alt]="post.title" loading="lazy">
+          <div>
+            <p class="eyebrow">{{ post.category }}</p>
+            <h3>{{ post.title }}</h3>
+            <p class="section-copy">{{ post.summary }}</p>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>
+
+<section class="section cta">
+  <div class="page-shell cta-card panel">
+    <div>
+      <p class="eyebrow">Ready to launch</p>
+      <h2 class="section-heading">Build a premium storefront that feels editorial, modern, and scalable.</h2>
+    </div>
+    <a routerLink="/contact" class="btn-primary">Start your order</a>
+  </div>
+</section>
