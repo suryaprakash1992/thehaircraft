@@ -31,7 +31,38 @@
     </form>
 
     <div class="actions">
-      <a routerLink="/auth/signin">{{ authService.isAuthenticated() ? 'Account' : 'Signin' }}</a>
+      @if (authService.isAuthenticated() && currentUser()) {
+        <div class="user-menu">
+          <button
+            type="button"
+            class="user-button"
+            (click)="toggleDropdown($event)"
+            aria-label="User menu"
+          >
+            @if (currentUser()!.photoUrl) {
+              <img
+                [src]="currentUser()!.photoUrl"
+                [alt]="currentUser()!.displayName"
+                class="avatar avatar-photo"
+              />
+            } @else {
+              <div class="avatar avatar-initials">
+                {{ getInitials(currentUser()!.displayName) }}
+              </div>
+            }
+            <span class="username">{{ currentUser()!.displayName }}</span>
+          </button>
+
+          @if (dropdownOpen()) {
+            <div class="dropdown-menu">
+              <a routerLink="/account" (click)="closeDropdown()">My Account</a>
+              <button type="button" (click)="logout()" class="logout-btn">Logout</button>
+            </div>
+          }
+        </div>
+      } @else {
+        <a routerLink="/auth/signin">Signin</a>
+      }
       <a routerLink="/cart">Cart <span>{{ cartCount() }}</span></a>
       <button type="button" class="menu-toggle" (click)="toggleMenu()">Menu</button>
     </div>

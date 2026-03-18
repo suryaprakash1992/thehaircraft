@@ -87,6 +87,111 @@
   color: var(--color-gold);
 }
 
+.user-menu {
+  position: relative;
+}
+
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: none;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 0.375rem;
+  color: rgba(255, 255, 255, 0.84);
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: rgba(212, 175, 55, 0.6);
+    color: var(--color-gold);
+  }
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+.avatar-photo {
+  object-fit: cover;
+}
+
+.avatar-initials {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  color: var(--color-gold);
+}
+
+.username {
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 160px;
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 0.375rem;
+  padding: 0.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  z-index: 30;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-menu a,
+.logout-btn {
+  padding: 0.75rem 1rem;
+  color: rgba(255, 255, 255, 0.84);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+
+  &:hover {
+    background: rgba(212, 175, 55, 0.1);
+    color: var(--color-gold);
+  }
+}
+
+.logout-btn {
+  border-top: 1px solid rgba(212, 175, 55, 0.1);
+  color: #ff6b6b;
+
+  &:hover {
+    background: rgba(255, 107, 107, 0.1);
+    color: #ff8787;
+  }
+}
+
 .menu-toggle,
 .mobile-nav {
   display: none;
@@ -112,5 +217,9 @@
     width: var(--container);
     margin: 0 auto 1rem;
     padding: 1rem;
+  }
+
+  .username {
+    display: none;
   }
 }

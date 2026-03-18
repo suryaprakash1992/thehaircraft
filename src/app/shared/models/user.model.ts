@@ -3,4 +3,6 @@ export interface AppUser {
   displayName: string;
   email: string;
   phone?: string;
+  photoUrl?: string;
+  provider?: 'email' | 'google' | 'facebook';
 }
