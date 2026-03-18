@@ -1,0 +1,160 @@
+<div class="admin-container page-shell">
+  <div class="form-wrapper">
+    <div class="header">
+      <h1 class="section-heading">Create Product</h1>
+      <a routerLink="/admin/products" class="btn-link">← Back to Products</a>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="alert alert-error">
+        <p>{{ errorMessage() }}</p>
+      </div>
+    }
+
+    @if (successMessage()) {
+      <div class="alert alert-success">
+        <p>{{ successMessage() }}</p>
+      </div>
+    }
+
+    <form [formGroup]="form" (ngSubmit)="createProduct()" class="product-form">
+      <!-- Product Name -->
+      <div class="form-group">
+        <label for="productName" class="form-label">Product Name *</label>
+        <input
+          id="productName"
+          type="text"
+          class="form-control"
+          formControlName="productName"
+          placeholder="e.g., Premium Hair Extensions"
+          [disabled]="isLoading()"
+        />
+        @if (getFieldError('productName')) {
+          <span class="form-error">{{ getFieldError('productName') }}</span>
+        }
+      </div>
+
+      <!-- Quality -->
+      <div class="form-group">
+        <label for="quality" class="form-label">Quality (1-100) *</label>
+        <input
+          id="quality"
+          type="number"
+          class="form-control"
+          formControlName="quality"
+          min="1"
+          max="100"
+          placeholder="85"
+          [disabled]="isLoading()"
+        />
+        @if (getFieldError('quality')) {
+          <span class="form-error">{{ getFieldError('quality') }}</span>
+        }
+      </div>
+
+      <!-- Amount -->
+      <div class="form-group">
+        <label for="amount" class="form-label">Price *</label>
+        <input
+          id="amount"
+          type="number"
+          class="form-control"
+          formControlName="amount"
+          step="0.01"
+          min="0"
+          placeholder="99.99"
+          [disabled]="isLoading()"
+        />
+        @if (getFieldError('amount')) {
+          <span class="form-error">{{ getFieldError('amount') }}</span>
+        }
+      </div>
+
+      <!-- Currency -->
+      <div class="form-group">
+        <label for="currency" class="form-label">Currency *</label>
+        <select
+          id="currency"
+          class="form-control"
+          formControlName="currency"
+          [disabled]="isLoading()"
+        >
+          @for (currency of currencies; track currency.code) {
+            <option [value]="currency.code">
+              {{ currency.code }} ({{ currency.symbol }}) - {{ currency.name }}
+            </option>
+          }
+        </select>
+      </div>
+
+      <!-- Product Description -->
+      <div class="form-group full-width">
+        <label for="productDescription" class="form-label">Description *</label>
+        <textarea
+          id="productDescription"
+          class="form-control textarea"
+          formControlName="productDescription"
+          placeholder="Detailed product description (10-3000 characters)"
+          rows="6"
+          [disabled]="isLoading()"
+        ></textarea>
+        <span class="form-hint">
+          {{ form.get('productDescription')?.value?.length || 0 }} / 3000 characters
+        </span>
+        @if (getFieldError('productDescription')) {
+          <span class="form-error">{{ getFieldError('productDescription') }}</span>
+        }
+      </div>
+
+      <!-- Image Upload -->
+      <div class="form-group full-width">
+        <label class="form-label">Product Image (JPG/PNG, max 1MB) *</label>
+        <div class="image-upload">
+          @if (imagePreview()) {
+            <div class="image-preview">
+              <img [src]="imagePreview()" alt="Preview" />
+              <button
+                type="button"
+                class="btn-remove"
+                (click)="clearImage()"
+                [disabled]="isLoading()"
+              >
+                Remove
+              </button>
+            </div>
+          } @else {
+            <label class="upload-zone">
+              <input
+                type="file"
+                accept="image/jpeg,image/png"
+                (change)="onImageSelected($event)"
+                [disabled]="isLoading()"
+              />
+              <div class="upload-content">
+                <span class="upload-icon">📸</span>
+                <p class="upload-text">Click to select image</p>
+                <span class="upload-hint">or drag and drop</span>
+              </div>
+            </label>
+          }
+        </div>
+        @if (!selectedImage()) {
+          <span class="form-error">Image is required</span>
+        }
+      </div>
+
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="isLoading()">
+          @if (isLoading()) {
+            <span class="spinner"></span>
+            Creating...
+          } @else {
+            Create Product
+          }
+        </button>
+        <a routerLink="/admin/products" class="btn-secondary">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

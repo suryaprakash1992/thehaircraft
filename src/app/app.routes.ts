@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth.guard';
 import { checkoutGuard } from './core/guards/checkout.guard';
 import { guestGuard } from './core/guards/guest.guard';
+import { adminGuard } from './features/admin/guards/admin.guard';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 
@@ -83,6 +84,11 @@ export const routes: Routes = [
           )
       }
     ]
+  },
+  {
+    path: 'admin',
+    // canActivate: [adminGuard],
+    loadChildren: () => import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES)
   },
   { path: '**', redirectTo: '' }
 ];

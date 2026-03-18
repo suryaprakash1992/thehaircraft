@@ -1,0 +1,97 @@
+<div class="admin-container page-shell">
+  <div class="list-header">
+    <div>
+      <h1 class="section-heading">Products</h1>
+      <p class="subtitle">Manage your product catalog</p>
+    </div>
+    <a routerLink="/admin/products/create" class="btn-primary">+ Create Product</a>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error">
+      <p>{{ errorMessage() }}</p>
+    </div>
+  }
+
+  @if (isLoading()) {
+    <div class="loading">
+      <span class="spinner"></span>
+      <p>Loading products...</p>
+    </div>
+  } @else if (products().length === 0) {
+    <div class="empty-state">
+      <p class="empty-icon">📦</p>
+      <h3>No products yet</h3>
+      <p>Create your first product to get started</p>
+      <a routerLink="/admin/products/create" class="btn-primary">Create Product</a>
+    </div>
+  } @else {
+    <div class="products-table">
+      <div class="table-header">
+        <div class="col-image">Image</div>
+        <div class="col-name">Name</div>
+        <div class="col-quality">Quality</div>
+        <div class="col-price">Price</div>
+        <div class="col-date">Created</div>
+        <div class="col-actions">Actions</div>
+      </div>
+
+      @for (product of products(); track product.id) {
+        <div class="table-row">
+          <div class="col-image">
+            <img [src]="product.productImage" [alt]="product.productName" class="thumbnail" />
+          </div>
+          <div class="col-name">
+            <h4>{{ product.productName }}</h4>
+            <p class="description">{{ product.productDescription.substring(0, 80) }}...</p>
+          </div>
+          <div class="col-quality">
+            <span class="quality-badge">{{ product.quality }}/100</span>
+          </div>
+          <div class="col-price">
+            <strong>{{ product.amount | number: '1.2-2' }} {{ product.currency }}</strong>
+          </div>
+          <div class="col-date">
+            {{ formatDate(product.createdAt) }}
+          </div>
+          <div class="col-actions">
+            @if (deleteConfirm() === product.id) {
+              <div class="confirm-delete">
+                <p>Delete this product?</p>
+                <button
+                  type="button"
+                  class="btn-delete-small"
+                  (click)="deleteProduct(product.id!)"
+                >
+                  Delete
+                </button>
+                <button
+                  type="button"
+                  class="btn-cancel-small"
+                  (click)="cancelDelete()"
+                >
+                  Cancel
+                </button>
+              </div>
+            } @else {
+              <button
+                type="button"
+                class="btn-edit"
+                (click)="editProduct(product.id!)"
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                class="btn-delete"
+                (click)="confirmDelete(product.id!)"
+              >
+                Delete
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,174 @@
+<div class="admin-container">
+  <!-- Product Not Found State -->
+  <div *ngIf="productNotFound()" class="empty-state">
+    <div class="empty-icon">📦</div>
+    <h3>Product Not Found</h3>
+    <p>The product you're trying to edit could not be found.</p>
+    <button class="btn-primary" (click)="goBack()">Back to Products</button>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoadingProduct()" class="loading">
+    <div class="spinner"></div>
+    <p>Loading product details...</p>
+  </div>
+
+  <!-- Edit Form -->
+  <div *ngIf="!isLoadingProduct() && !productNotFound()">
+    <div class="form-header">
+      <button class="btn-back" (click)="goBack()" title="Go back to products list">
+        ← Back
+      </button>
+      <div>
+        <h1>Edit Product</h1>
+        <p class="subtitle" *ngIf="currentProduct()">
+          Editing: <strong>{{ currentProduct()?.productName }}</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- Error Alert -->
+    <div *ngIf="errorMessage()" class="alert alert-error">
+      <p>{{ errorMessage() }}</p>
+    </div>
+
+    <!-- Success Alert -->
+    <div *ngIf="successMessage()" class="alert alert-success">
+      <p>✓ {{ successMessage() }}</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="updateProduct()" class="product-form">
+      <!-- Current Image Section -->
+      <div class="form-group image-group" *ngIf="!newImageSelected()">
+        <label>Current Product Image</label>
+        <div class="current-image-preview" *ngIf="imagePreview()">
+          <img [src]="imagePreview()" alt="Current product image" />
+        </div>
+        <p class="image-info">
+          <small>Click "Select New Image" below to replace this image</small>
+        </p>
+      </div>
+
+      <!-- Image Upload Section -->
+      <div class="form-group image-group">
+        <label for="image">
+          {{ newImageSelected() ? 'New Image Preview' : 'Select Product Image' }}
+        </label>
+
+        <div class="image-upload-container">
+          <div class="upload-zone" id="uploadZone">
+            <input
+              type="file"
+              id="image"
+              accept="image/jpeg,image/png"
+              (change)="onImageSelected($event)"
+              class="file-input"
+              #imageInput
+            />
+            <label for="image" class="upload-label">
+              <div class="upload-icon">📷</div>
+              <p class="upload-text">
+                {{ 'Click to select image or drag and drop' }}
+              </p>
+              <p class="upload-hint">JPG or PNG, max 1MB</p>
+            </label>
+          </div>
+
+          <!-- Image Preview -->
+          <div *ngIf="imagePreview()" class="image-preview">
+            <img [src]="imagePreview()" alt="Product preview" />
+            <div class="preview-info">
+              <p>Preview</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Name -->
+      <div class="form-group">
+        <label for="productName">Product Name *</label>
+        <input
+          id="productName"
+          type="text"
+          formControlName="productName"
+          placeholder="Enter product name (3-100 characters)"
+          class="form-input"
+        />
+        <small class="error" *ngIf="getFieldError('productName')">
+          {{ getFieldError('productName') }}
+        </small>
+      </div>
+
+      <!-- Quality -->
+      <div class="form-group">
+        <label for="quality">Quality (1-100) *</label>
+        <input
+          id="quality"
+          type="number"
+          formControlName="quality"
+          min="1"
+          max="100"
+          placeholder="Enter quality rating"
+          class="form-input"
+        />
+        <small class="error" *ngIf="getFieldError('quality')">
+          {{ getFieldError('quality') }}
+        </small>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Product Description *</label>
+        <textarea
+          id="description"
+          formControlName="productDescription"
+          placeholder="Enter detailed product description (10-3000 characters)"
+          rows="5"
+          class="form-input"
+        ></textarea>
+        <small class="error" *ngIf="getFieldError('productDescription')">
+          {{ getFieldError('productDescription') }}
+        </small>
+      </div>
+
+      <!-- Amount and Currency -->
+      <div class="form-row">
+        <div class="form-group">
+          <label for="amount">Price *</label>
+          <input
+            id="amount"
+            type="number"
+            formControlName="amount"
+            min="0.01"
+            step="0.01"
+            placeholder="Enter product price"
+            class="form-input"
+          />
+          <small class="error" *ngIf="getFieldError('amount')">
+            {{ getFieldError('amount') }}
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label for="currency">Currency *</label>
+          <select formControlName="currency" class="form-input">
+            <option *ngFor="let curr of CURRENCIES" [value]="curr.code">
+              {{ curr.code }} - {{ curr.name }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="isLoading()">
+          <span *ngIf="!isLoading()">Update Product</span>
+          <span *ngIf="isLoading()">Updating...</span>
+        </button>
+        <button type="button" class="btn-secondary" (click)="goBack()" [disabled]="isLoading()">
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
