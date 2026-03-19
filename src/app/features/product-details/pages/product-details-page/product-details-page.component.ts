@@ -31,7 +31,7 @@ export class ProductDetailsPageComponent {
   constructor() {
     if (this.product) {
       this.seo.update({
-        title: `${this.product.name} | THEHAIRCRAFT`,
+        title: `${this.product.name} | HAIRCRAFT`,
         description: this.product.shortDescription
       });
     }

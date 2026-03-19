@@ -61,7 +61,7 @@ export class ProductsPageComponent {
 
   constructor() {
     this.seo.update({
-      title: 'Products | THEHAIRCRAFT',
+      title: 'Products | HAIRCRAFT',
       description: 'Browse luxury bundles, wigs, closures, and curated premium hair essentials.'
     });
   }

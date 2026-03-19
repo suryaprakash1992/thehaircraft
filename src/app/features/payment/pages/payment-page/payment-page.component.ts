@@ -24,7 +24,7 @@ export class PaymentPageComponent {
 
   constructor() {
     this.seo.update({
-      title: 'Payment | THEHAIRCRAFT',
+      title: 'Payment | HAIRCRAFT',
       description: 'Complete payment with the Razorpay checkout flow and save the order to Firestore.'
     });
   }

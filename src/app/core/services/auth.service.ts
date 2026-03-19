@@ -29,13 +29,13 @@ export class AuthService {
         return from(this.getUserFromFirestore(authUser.uid)).pipe(
           map((firestoreUser) => firestoreUser || {
             id: authUser.uid,
-            displayName: authUser.displayName ?? 'THEHAIRCRAFT Client',
+            displayName: authUser.displayName ?? 'HAIRCRAFT Client',
             email: authUser.email ?? '',
             photoUrl: authUser.photoURL ?? undefined
           } as AppUser),
           catchError(() => of({
             id: authUser.uid,
-            displayName: authUser.displayName ?? 'THEHAIRCRAFT Client',
+            displayName: authUser.displayName ?? 'HAIRCRAFT Client',
             email: authUser.email ?? '',
             photoUrl: authUser.photoURL ?? undefined
           } as AppUser))

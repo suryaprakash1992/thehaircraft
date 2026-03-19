@@ -17,7 +17,7 @@ export class BlogPageComponent {
 
   constructor() {
     this.seo.update({
-      title: 'Blog | THEHAIRCRAFT',
+      title: 'Blog | HAIRCRAFT',
       description: 'Editorial blog previews and SEO-friendly content architecture for growth.'
     });
   }

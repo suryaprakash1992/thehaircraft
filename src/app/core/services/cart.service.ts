@@ -2,7 +2,7 @@ import { computed, effect, Injectable, signal } from '@angular/core';
 import { CartItem, CartSummary } from '../../shared/models/cart.model';
 import { Product } from '../../shared/models/product.model';
 
-const CART_STORAGE_KEY = 'thehaircraft-cart';
+const CART_STORAGE_KEY = 'haircraft-cart';
 
 @Injectable({ providedIn: 'root' })
 export class CartService {

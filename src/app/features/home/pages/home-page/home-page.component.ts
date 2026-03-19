@@ -44,9 +44,9 @@ export class HomePageComponent {
 
   constructor() {
     this.seo.update({
-      title: 'THEHAIRCRAFT | Luxury Hair Extensions & Wigs',
+      title: 'HAIRCRAFT | Luxury Hair Extensions & Wigs',
       description:
-        'Discover premium hair extensions, virgin wigs, lace closures, and client-first luxury service with THEHAIRCRAFT.'
+        'Discover premium hair extensions, virgin wigs, lace closures, and client-first luxury service with HAIRCRAFT.'
     });
   }
 }

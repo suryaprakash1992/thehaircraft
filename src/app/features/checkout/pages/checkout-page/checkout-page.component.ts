@@ -31,7 +31,7 @@ export class CheckoutPageComponent {
 
   constructor() {
     this.seo.update({
-      title: 'Checkout | THEHAIRCRAFT',
+      title: 'Checkout | HAIRCRAFT',
       description: 'Complete your checkout details to continue to secure payment.'
     });
   }

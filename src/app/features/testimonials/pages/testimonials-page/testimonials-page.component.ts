@@ -17,7 +17,7 @@ export class TestimonialsPageComponent {
 
   constructor() {
     this.seo.update({
-      title: 'Testimonials | THEHAIRCRAFT',
+      title: 'Testimonials | HAIRCRAFT',
       description: 'Social proof and customer story architecture for premium ecommerce growth.'
     });
   }

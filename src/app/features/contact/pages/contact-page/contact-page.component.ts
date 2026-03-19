@@ -27,7 +27,7 @@ export class ContactPageComponent {
 
   constructor() {
     this.seo.update({
-      title: 'Contact | THEHAIRCRAFT',
+      title: 'Contact | HAIRCRAFT',
       description: 'Lead capture, client consultation requests, and enterprise contact flow.'
     });
   }
