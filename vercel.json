@@ -2,10 +2,11 @@
   "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "dist/thehaircraft/browser",
-  "routes": [
+  "cleanUrls": true,
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/((?!.*\\.).*)",
+      "destination": "/index.html"
     }
   ]
 }
