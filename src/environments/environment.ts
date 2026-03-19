@@ -7,13 +7,13 @@ export const environment = {
     // TODO: Create authorized domains in Auth → Settings → Authorized domains
     // TODO: Create Firestore database: Firestore Database → Create database
     // TODO: Set Firestore rules to allow authenticated users
-    apiKey: '', // This is specific to your registered app and needs to be retrieved from the Firebase console.
-    authDomain: '',
-    projectId: '',
-    storageBucket: '',
-    messagingSenderId: '',
-    appId: '', // This is specific to your registered app and needs to be retrieved from the Firebase console.
-    measurementId: '' // This is present if Google Analytics is enabled for your app.
+    apiKey: (window as any).__env?.apiKey || "", // This is specific to your registered app and needs to be retrieved from the Firebase console.
+    authDomain: (window as any).__env?.authDomain || '',
+    projectId: (window as any).__env?.projectId || '',
+    storageBucket: (window as any).__env?.storageBucket || '',
+    messagingSenderId: (window as any).__env?.messagingSenderId || '',
+    appId: (window as any).__env?.appId || '', // This is specific to your registered app and needs to be retrieved from the Firebase console.
+    measurementId: (window as any).__env?.measurementId || '' // This is present if Google Analytics is enabled for your app.
   },
   razorpayKey: ''
 };
