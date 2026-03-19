@@ -53,6 +53,22 @@ export const routes: Routes = [
       {
         path: 'contact',
         loadChildren: () => import('./features/contact/contact.routes').then((m) => m.CONTACT_ROUTES)
+      },
+      {
+        path: 'about',
+        loadChildren: () => import('./features/about/about.routes').then((m) => m.ABOUT_ROUTES)
+      },
+      {
+        path: 'services',
+        loadChildren: () => import('./features/services/services.routes').then((m) => m.SERVICES_ROUTES)
+      },
+      {
+        path: 'payment-info',
+        loadChildren: () => import('./features/payment-info/payment-info.routes').then((m) => m.PAYMENT_INFO_ROUTES)
+      },
+      {
+        path: 'shipping',
+        loadChildren: () => import('./features/shipping/shipping.routes').then((m) => m.SHIPPING_ROUTES)
       }
     ]
   },
