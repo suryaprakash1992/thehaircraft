@@ -5,11 +5,19 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/admin/(.*)",
+      "source": "/admin",
       "destination": "/index.html"
     },
     {
-      "source": "/products/(.*)",
+      "source": "/admin/**",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/products/**",
       "destination": "/index.html"
     },
     {
@@ -49,7 +57,11 @@
       "destination": "/index.html"
     },
     {
-      "source": "/blog/(.*)",
+      "source": "/blog",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/blog/**",
       "destination": "/index.html"
     },
     {
@@ -57,7 +69,11 @@
       "destination": "/index.html"
     },
     {
-      "source": "/auth/(.*)",
+      "source": "/auth",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/auth/**",
       "destination": "/index.html"
     }
   ]
