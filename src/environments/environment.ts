@@ -13,7 +13,7 @@ export const environment = {
     storageBucket: (window as any).__env?.storageBucket || '',
     messagingSenderId: (window as any).__env?.messagingSenderId || '',
     appId: (window as any).__env?.appId || '', // This is specific to your registered app and needs to be retrieved from the Firebase console.
-    measurementId: (window as any).__env?.measurementId || '' // This is present if Google Analytics is enabled for your app.
+    // measurementId: (window as any).__env?.measurementId || '' // This is present if Google Analytics is enabled for your app.
   },
   razorpayKey: ''
 };

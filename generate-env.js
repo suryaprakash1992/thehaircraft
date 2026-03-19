@@ -15,7 +15,6 @@ window.__env = {
   storageBucket: "${process.env.NG_FIREBASE_STORAGE_BUCKET || ''}",
   messagingSenderId: "${process.env.NG_FIREBASE_MESSAGING_SENDER_ID || ''}",
   appId: "${process.env.NG_FIREBASE_APP_ID || ''}"
-  measurementId: "${process.env.NG_FIREBASE_MEASUREMENT_ID || ''}",
 };
 `;
 
