@@ -34,16 +34,17 @@
                 <p>{{ category.description }}</p>
                 <div class="detail-meta">
                   <span>{{ category.type }}</span>
-                
+                  <strong>{{ category.price }}</strong>
                 </div>
-                <a
-                  class="view-products-btn"
-                  routerLink="/products"
-                  [queryParams]="{ category: category.title }"
-                  (click)="$event.stopPropagation()"
-                >
-                  View Product Video
-                </a>
+                <div class="card-actions">
+                  <button
+                    type="button"
+                    class="view-products-btn"
+                    (click)="openVideos(category.videos); $event.stopPropagation()"
+                  >
+                    View Product Videos
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -52,6 +53,43 @@
     </div>
   </div>
 </section>
+
+<div *ngIf="isVideoOpen" class="video-modal" role="dialog" aria-modal="true" aria-label="Product videos modal">
+  <button type="button" class="modal-backdrop" aria-label="Close video modal" (click)="closeVideo()"></button>
+  <div class="modal-container">
+    <button type="button" class="close-button" aria-label="Close video modal" (click)="closeVideo()">&times;</button>
+
+    <div class="side-nav" aria-label="Product video list">
+      @for (video of selectedVideos; track $index; let index = $index) {
+        <button
+          type="button"
+          class="video-item"
+          [class.active]="index === selectedIndex"
+          (click)="selectVideo(index)"
+        >
+          <span class="video-item-number">{{ index + 1 }}</span>
+          <span class="video-item-label">Video {{ index + 1 }}</span>
+        </button>
+      }
+    </div>
+
+    <div class="video-player-section">
+      <div class="video-meta">
+        <h3>Product Video Gallery</h3>
+        <p>Video {{ selectedIndex + 1 }} of {{ selectedVideos.length }}</p>
+      </div>
+      <video
+        #productVideo
+        class="video-player"
+        controls
+        autoplay
+        playsinline
+        preload="metadata"
+        [src]="selectedVideo"
+      ></video>
+    </div>
+  </div>
+</div>
 
 <section class="section surface">
   <div class="page-shell">
@@ -95,7 +133,7 @@
   <div class="page-shell quote-card">
     <span class="quote-mark">"</span>
     <blockquote>{{ testimonials[0].quote }}</blockquote>
-    <p>{{ testimonials[0].name }} ï¿½ {{ testimonials[0].role }}</p>
+    <p>{{ testimonials[0].name }} · {{ testimonials[0].role }}</p>
   </div>
 </section>
 
