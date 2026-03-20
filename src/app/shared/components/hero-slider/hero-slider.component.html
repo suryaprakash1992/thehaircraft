@@ -1,6 +1,23 @@
 <section class="hero panel">
   <img class="hero-image" [src]="activeSlide().image" [alt]="activeSlide().title">
   <div class="overlay"></div>
+
+  <div class="social-strip" aria-label="Social media links">
+    @for (social of socialLinks; track social.id) {
+      <a
+        class="social-link"
+        [href]="social.href"
+        [attr.aria-label]="social.label"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path [attr.d]="social.iconPath"></path>
+        </svg>
+      </a>
+    }
+  </div>
+
   <div class="content page-shell">
     <div class="copy fade-up">
       <p class="eyebrow">{{ activeSlide().eyebrow }}</p>
