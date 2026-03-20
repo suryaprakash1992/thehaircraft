@@ -8,7 +8,136 @@
 .category-card {
   position: relative;
   min-height: 26rem;
+  overflow: visible;
+  padding: 0;
+  border-radius: 16px;
+  perspective: 1400px;
+  cursor: pointer;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.2);
+}
+
+.flip-container,
+.flip-inner,
+.flip-front,
+.flip-back {
+  border-radius: 16px;
+}
+
+.flip-container {
+  position: relative;
+  min-height: 26rem;
+  transform-style: preserve-3d;
+}
+
+.flip-inner {
+  position: relative;
+  min-height: 26rem;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+}
+
+.category-card:hover .flip-inner,
+.category-card.is-flipped .flip-inner,
+.category-card:focus-visible .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-front,
+.flip-back {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-front {
+  background: #101010;
+}
+
+.flip-back {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 1rem;
+  padding: 1.75rem;
+  background:
+    linear-gradient(160deg, rgba(212, 175, 55, 0.18), transparent 38%),
+    linear-gradient(180deg, #1a1a1a 0%, #0c0c0c 100%);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  color: #f6f1e8;
+  transform: rotateY(180deg);
+}
+
+.detail-label {
+  align-self: flex-start;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 999px;
+  color: #d4af37;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.flip-back h3 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.flip-back p {
+  margin: 0;
+  color: rgba(246, 241, 232, 0.78);
+  line-height: 1.7;
+}
+
+.detail-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: rgba(246, 241, 232, 0.9);
+}
+
+.detail-meta span {
+  font-size: 0.95rem;
+}
+
+.detail-meta strong {
+  color: #d4af37;
+  font-size: 1.1rem;
+}
+
+.view-products-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  min-height: 2.9rem;
+  padding: 0.8rem 1.35rem;
+  border-radius: 999px;
+  background: #d4af37;
+  color: #111111;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 12px 24px rgba(212, 175, 55, 0.2);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.view-products-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgba(212, 175, 55, 0.28);
+}
+
+.view-products-btn:focus-visible,
+.category-card:focus-visible {
+  outline: 2px solid #d4af37;
+  outline-offset: 4px;
 }
 
 .category-card img,
@@ -28,6 +157,11 @@
   gap: 0.5rem;
   padding: 1.5rem;
   background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.82));
+}
+
+.category-card .overlay h3 {
+  margin: 0;
+  font-size: 1.55rem;
 }
 
 .surface {
@@ -99,5 +233,16 @@ blockquote {
   .cta-card {
     flex-direction: column;
     align-items: start;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .category-card:hover .flip-inner,
+  .category-card:focus-visible .flip-inner {
+    transform: none;
+  }
+
+  .category-card.is-flipped .flip-inner {
+    transform: rotateY(180deg);
   }
 }

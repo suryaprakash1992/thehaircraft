@@ -21,24 +21,42 @@ export class HomePageComponent {
   readonly productService = inject(ProductService);
   readonly blogService = inject(BlogService);
   readonly testimonials = MOCK_TESTIMONIALS;
+  flippedCategoryId: string | null = null;
   readonly categories = [
     {
       id: 'c1',
       title: 'Raw Indian Hair',
-      image:
-        'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=900&q=80'
+      description: 'Double-drawn bundles with natural luster, soft movement, and a luxury finish for custom installs.',
+      price: 'From $189',
+      type: '100% Remy',
+      image: 'assets/images/raw_indian_hair.jpg'
     },
     {
       id: 'c2',
-      title: 'Virgin Wigs',
+      title: 'Front Closures',
+      description: 'Undetectable closures designed to match premium bundles with breathable construction and natural parting.',
+      price: 'From $119',
+      type: 'Swiss Lace',
       image:
-        'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=80'
+        'assets/images/front-closure.png'
+    },
+     {
+      id: 'c3',
+      title: 'Long Wavy hair',
+      description: 'A beautiful long wave wig with soft, bouncy curls that create a stylish and glamorous appearance. Lightweight, durable, and easy to maintain, making it perfect for both casual and party wear.',
+      price: 'From $119',
+      type: 'Swiss Lace',
+      image:
+        'assets/images/log_wave.jpg'
     },
     {
-      id: 'c3',
-      title: 'Lace Closures',
+      id: 'c4',
+      title: 'Indian Natural Curly Hair',
+      description: 'A beautiful long wave wig with soft, bouncy curls that create a stylish and glamorous appearance. Lightweight, durable, and easy to maintain, making it perfect for both casual and party wear.',
+      price: 'From $119',
+      type: 'Swiss Lace',
       image:
-        'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?auto=format&fit=crop&w=900&q=80'
+        'assets/images/indian-curly-hair-.jpg'
     }
   ];
 
@@ -49,4 +67,18 @@ export class HomePageComponent {
         'Discover premium hair extensions, virgin wigs, lace closures, and client-first luxury service with HAIRCRAFT.'
     });
   }
+
+  toggleCategoryFlip(categoryId: string): void {
+    if (!this.isMobilePointer()) {
+      return;
+    }
+
+    this.flippedCategoryId = this.flippedCategoryId === categoryId ? null : categoryId;
+  }
+
+  private isMobilePointer(): boolean {
+    return typeof window !== 'undefined' && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  }
 }
+
+

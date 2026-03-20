@@ -11,13 +11,43 @@
 
     <div class="category-grid">
       @for (category of categories; track category.id) {
-        <a class="category-card panel fade-up" routerLink="/products" [queryParams]="{ category: category.title }">
-          <img [src]="category.image" [alt]="category.title" loading="lazy">
-          <div class="overlay">
-            <h3>{{ category.title }}</h3>
-            <span>Shop now</span>
+        <article
+          class="category-card panel fade-up"
+          [class.is-flipped]="flippedCategoryId === category.id"
+          (click)="toggleCategoryFlip(category.id)"
+          (keydown.enter)="toggleCategoryFlip(category.id)"
+          (keydown.space)="toggleCategoryFlip(category.id); $event.preventDefault()"
+          tabindex="0"
+        >
+          <div class="flip-container">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <img [src]="category.image" [alt]="category.title" loading="lazy">
+                <div class="overlay">
+                  <h3>{{ category.title }}</h3>
+                </div>
+              </div>
+
+              <div class="flip-back">
+                <span class="detail-label">Premium Collection</span>
+                <h3>{{ category.title }}</h3>
+                <p>{{ category.description }}</p>
+                <div class="detail-meta">
+                  <span>{{ category.type }}</span>
+                
+                </div>
+                <a
+                  class="view-products-btn"
+                  routerLink="/products"
+                  [queryParams]="{ category: category.title }"
+                  (click)="$event.stopPropagation()"
+                >
+                  View Product Video
+                </a>
+              </div>
+            </div>
           </div>
-        </a>
+        </article>
       }
     </div>
   </div>
@@ -65,7 +95,7 @@
   <div class="page-shell quote-card">
     <span class="quote-mark">"</span>
     <blockquote>{{ testimonials[0].quote }}</blockquote>
-    <p>{{ testimonials[0].name }} · {{ testimonials[0].role }}</p>
+    <p>{{ testimonials[0].name }} � {{ testimonials[0].role }}</p>
   </div>
 </section>
 
