@@ -27,7 +27,7 @@
       }
     </nav>
 
-    <form class="search desktop-search" (submit)="runSearch($event)">
+    <!-- <form class="search desktop-search" (submit)="runSearch($event)">
       <input
         class="field"
         type="search"
@@ -35,7 +35,7 @@
         [value]="searchTerm()"
         (input)="searchTerm.set(($any($event.target).value ?? '').trim())"
       >
-    </form>
+    </form> -->
 
     <div class="actions">
       @if (authService.isAuthenticated() && currentUser()) {
@@ -73,14 +73,14 @@
       } @else {
         <a routerLink="/auth/signin">Signin</a>
       }
-      <a routerLink="/cart">Cart <span>{{ cartCount() }}</span></a>
+      <!-- <a routerLink="/cart">Cart <span>{{ cartCount() }}</span></a> -->
       <button type="button" class="menu-toggle" (click)="toggleMenu()">Menu</button>
     </div>
   </div>
 
   @if (mobileMenuOpen()) {
     <div class="mobile-nav panel">
-      <form class="search" (submit)="runSearch($event)">
+      <!-- <form class="search" (submit)="runSearch($event)">
         <input
           class="field"
           type="search"
@@ -88,7 +88,7 @@
           [value]="searchTerm()"
           (input)="searchTerm.set(($any($event.target).value ?? '').trim())"
         >
-      </form>
+      </form> -->
       <a routerLink="/products" (click)="toggleMenu()">Products</a>
       <a routerLink="/testimonials" (click)="toggleMenu()">Testimonials</a>
       <a routerLink="/blog" (click)="toggleMenu()">Blog</a>
