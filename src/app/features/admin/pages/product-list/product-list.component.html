@@ -4,7 +4,7 @@
       <h1 class="section-heading">Products</h1>
       <p class="subtitle">Manage your product catalog</p>
     </div>
-    <a routerLink="/admin/products/create" class="btn-primary">+ Create Product</a>
+    <button type="button" class="btn-primary" (click)="navigateToCreate()">+ Create Product</button>
   </div>
 
   @if (errorMessage()) {
@@ -23,7 +23,7 @@
       <p class="empty-icon">📦</p>
       <h3>No products yet</h3>
       <p>Create your first product to get started</p>
-      <a routerLink="/admin/products/create" class="btn-primary">Create Product</a>
+      <button type="button" class="btn-primary" (click)="navigateToCreate()">Create Product</button>
     </div>
   } @else {
     <div class="products-table">

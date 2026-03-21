@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Currency, CURRENCIES, getCurrencyLabel } from '../../data/currencies.data';
 import { ProductService } from '../../services/product.service';
@@ -9,7 +9,7 @@ import { Product } from '../../models/product.model';
 @Component({
   selector: 'app-product-create',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './product-create.component.html',
   styleUrl: './product-create.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -68,6 +68,10 @@ export class ProductCreateComponent {
     return currency.code;
   }
 
+  navigateToList(): void {
+    void this.router.navigate(['/admin/products']);
+  }
+
   onImageSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
@@ -124,14 +128,7 @@ export class ProductCreateComponent {
       };
 
       await this.productService.createProduct(productData, this.selectedImage()!);
-
-      this.successMessage.set('Product created successfully!');
-      this.form.reset({ currency: 'USD' });
-      this.clearImage();
-
-      setTimeout(() => {
-        this.router.navigate(['/admin/products']);
-      }, 2000);
+      void this.router.navigate(['/admin/products']);
     } catch (error: any) {
       const errorMsg = error?.message ?? 'Failed to create product';
       this.errorMessage.set(errorMsg);

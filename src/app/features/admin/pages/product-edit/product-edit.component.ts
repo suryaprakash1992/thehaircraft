@@ -1,9 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { signal } from '@angular/core';
-import { Product, ProductFormData } from '../../models/product.model';
+import { Product } from '../../models/product.model';
 import { ProductService } from '../../services/product.service';
 import { CURRENCIES } from '../../data/currencies.data';
 
@@ -12,7 +11,7 @@ import { CURRENCIES } from '../../data/currencies.data';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './product-edit.component.html',
-  styleUrls: ['./product-edit.component.scss'],
+  styleUrls: ['./product-edit.component.scss']
 })
 export class ProductEditComponent implements OnInit {
   private readonly formBuilder = inject(FormBuilder);
@@ -22,28 +21,28 @@ export class ProductEditComponent implements OnInit {
 
   readonly CURRENCIES = CURRENCIES;
 
-  isLoading = signal(false);
-  isLoadingProduct = signal(true);
-  errorMessage = signal<string | null>(null);
-  successMessage = signal<string | null>(null);
-  imagePreview = signal<string | null>(null);
-  currentProduct = signal<Product | null>(null);
-  newImageSelected = signal(false);
-  productNotFound = signal(false);
+  readonly isLoading = signal(false);
+  readonly isLoadingProduct = signal(true);
+  readonly errorMessage = signal<string | null>(null);
+  readonly successMessage = signal<string | null>(null);
+  readonly imagePreview = signal<string | null>(null);
+  readonly currentProduct = signal<Product | null>(null);
+  readonly newImageSelected = signal(false);
+  readonly productNotFound = signal(false);
 
   readonly form = this.formBuilder.nonNullable.group({
     productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
     quality: [0, [Validators.required, Validators.min(1), Validators.max(100)]],
     productDescription: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(3000)]],
     amount: [0, [Validators.required, Validators.min(0.01)]],
-    currency: ['USD', Validators.required],
+    currency: ['USD', Validators.required]
   });
 
-  ngOnInit() {
-    this.loadProduct();
+  ngOnInit(): void {
+    void this.loadProduct();
   }
 
-  private async loadProduct() {
+  private async loadProduct(): Promise<void> {
     try {
       this.isLoadingProduct.set(true);
       const productId = this.route.snapshot.paramMap.get('id');
@@ -64,14 +63,12 @@ export class ProductEditComponent implements OnInit {
 
       this.currentProduct.set(product);
       this.imagePreview.set(product.productImage);
-
-      // Populate form with existing data
       this.form.patchValue({
         productName: product.productName,
         quality: product.quality,
         productDescription: product.productDescription,
         amount: product.amount,
-        currency: product.currency,
+        currency: product.currency
       });
 
       this.isLoadingProduct.set(false);
@@ -82,17 +79,15 @@ export class ProductEditComponent implements OnInit {
     }
   }
 
-  onImageSelected(event: Event) {
+  onImageSelected(event: Event): void {
     try {
       const input = event.target as HTMLInputElement;
       const file = input.files?.[0];
 
       if (!file) return;
 
-      // Validate file
       this.productService['validateImageFile'](file);
 
-      // Create preview
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview.set(reader.result as string);
@@ -106,7 +101,7 @@ export class ProductEditComponent implements OnInit {
     }
   }
 
-  async updateProduct() {
+  async updateProduct(): Promise<void> {
     try {
       if (this.form.invalid) {
         this.errorMessage.set('Please fill in all required fields correctly');
@@ -122,38 +117,30 @@ export class ProductEditComponent implements OnInit {
       const imageInput = document.querySelector('input[type="file"]') as HTMLInputElement;
       let productImage = product.productImage;
 
-      // Upload new image if selected
       if (this.newImageSelected() && imageInput?.files?.[0]) {
         productImage = await this.productService.uploadProductImage(imageInput.files[0]);
-        // Delete old image if it exists
         if (product.productImage) {
-          await this.productService['deleteImage'](product.productImage).catch(() => {
-            // Ignore error if old image doesn't exist
-          });
+          await this.productService['deleteImage'](product.productImage).catch(() => undefined);
         }
       }
 
       const formValue = this.form.getRawValue();
       const productData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'> = {
         ...formValue,
-        productImage,
+        productImage
       };
 
       await this.productService.updateProduct(product.id!, productData);
-
-      this.successMessage.set('Product updated successfully!');
-      this.isLoading.set(false);
-
-      // Redirect to list after 1.5 seconds
-      setTimeout(() => {
-        this.router.navigate(['/admin/products']);
-      }, 1500);
+      void this.router.navigate(['/admin/products']);
     } catch (error) {
       this.isLoading.set(false);
       const message = error instanceof Error ? error.message : 'Failed to update product';
       this.errorMessage.set(message);
       console.error('Error updating product:', error);
+      return;
     }
+
+    this.isLoading.set(false);
   }
 
   getFieldError(fieldName: string): string | null {
@@ -184,7 +171,7 @@ export class ProductEditComponent implements OnInit {
       .trim();
   }
 
-  goBack() {
-    this.router.navigate(['/admin/products']);
+  goBack(): void {
+    void this.router.navigate(['/admin/products']);
   }
 }

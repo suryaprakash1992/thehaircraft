@@ -3,9 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminDashboardComponent } from './pages/admin-dashboard/admin-dashboard.component';
 import { BlogsComponent } from './pages/blogs/blogs.component';
 import { PaymentsComponent } from './pages/payments/payments.component';
+import { ProductCreateComponent } from './pages/product-create/product-create.component';
+import { ProductEditComponent } from './pages/product-edit/product-edit.component';
+import { ProductListComponent } from './pages/product-list/product-list.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { TestimonyComponent } from './pages/testimony/testimony.component';
-import { ProductCreateComponent } from './pages/product-create/product-create.component';
 
 const routes: Routes = [
   {
@@ -14,7 +16,21 @@ const routes: Routes = [
     children: [
       {
         path: 'products',
-        component: ProductCreateComponent
+        component: ProductsComponent,
+        children: [
+          {
+            path: '',
+            component: ProductListComponent
+          },
+          {
+            path: 'create',
+            component: ProductCreateComponent
+          },
+          {
+            path: 'edit/:id',
+            component: ProductEditComponent
+          }
+        ]
       },
       {
         path: 'blogs',

@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, signal, effect } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product.model';
@@ -8,7 +8,7 @@ import { getCurrencyLabel } from '../../data/currencies.data';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [RouterLink, CommonModule],
+  imports: [CommonModule],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -55,7 +55,7 @@ export class ProductListComponent {
   async deleteProduct(productId: string): Promise<void> {
     try {
       await this.productService.deleteProduct(productId);
-      this.products.update(products => products.filter(p => p.id !== productId));
+      this.products.update((products) => products.filter((p) => p.id !== productId));
       this.deleteConfirm.set(null);
     } catch (error: any) {
       const errorMsg = error?.message ?? 'Failed to delete product';
@@ -64,8 +64,12 @@ export class ProductListComponent {
     }
   }
 
+  navigateToCreate(): void {
+    void this.router.navigate(['/admin/products/create']);
+  }
+
   editProduct(productId: string): void {
-    this.router.navigate(['/admin/products', productId, 'edit']);
+    void this.router.navigate(['/admin/products/edit', productId]);
   }
 
   formatDate(timestamp: any): string {

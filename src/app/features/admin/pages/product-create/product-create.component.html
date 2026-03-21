@@ -2,7 +2,7 @@
   <div class="form-wrapper">
     <div class="header">
       <h1 class="section-heading">Create Product</h1>
-      <a routerLink="/admin/products" class="btn-link">← Back to Products</a>
+      <button type="button" class="btn-link" (click)="navigateToList()">← Back to Products</button>
     </div>
 
     @if (errorMessage()) {
@@ -167,7 +167,7 @@
             Create Product
           }
         </button>
-        <a routerLink="/admin/products" class="btn-secondary">Cancel</a>
+        <button type="button" class="btn-secondary" [disabled]="isLoading()" (click)="navigateToList()">Cancel</button>
       </div>
     </form>
   </div>
