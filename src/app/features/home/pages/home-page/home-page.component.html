@@ -22,7 +22,23 @@
           <div class="flip-container">
             <div class="flip-inner">
               <div class="flip-front">
-                <img [src]="category.image" [alt]="category.title" loading="lazy">
+                <ng-container *ngIf="category.video; else categoryImage">
+                  <video
+                    class="category-preview-video"
+                    [src]="category.video"
+                    [attr.aria-label]="category.title + ' preview video'"
+                    [muted]="true"
+                    [defaultMuted]="true"
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                  ></video>
+                </ng-container>
+                <ng-template #categoryImage>
+                  <img [src]="category.image" [alt]="category.title" loading="lazy">
+                </ng-template>
                 <div class="overlay">
                   <h3>{{ category.title }}</h3>
                 </div>
