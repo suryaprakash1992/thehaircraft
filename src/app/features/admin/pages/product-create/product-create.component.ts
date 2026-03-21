@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Currency, CURRENCIES, getCurrencyLabel } from '../../data/currencies.data';
 import { ProductService } from '../../services/product.service';
-import { CURRENCIES, getCurrencyLabel } from '../../data/currencies.data';
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -18,8 +18,9 @@ export class ProductCreateComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly productService = inject(ProductService);
   private readonly router = inject(Router);
+  private readonly elementRef = inject(ElementRef<HTMLElement>);
 
-  readonly currencies = CURRENCIES;
+  readonly currencies: readonly Currency[] = CURRENCIES;
   readonly getCurrencyLabel = getCurrencyLabel;
 
   readonly form = this.formBuilder.nonNullable.group({
@@ -35,6 +36,37 @@ export class ProductCreateComponent {
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
   readonly successMessage = signal<string | null>(null);
+  readonly currencyMenuOpen = signal(false);
+
+  @HostListener('document:click', ['$event'])
+  handleDocumentClick(event: MouseEvent): void {
+    if (!this.elementRef.nativeElement.contains(event.target as Node)) {
+      this.currencyMenuOpen.set(false);
+    }
+  }
+
+  toggleCurrencyMenu(): void {
+    if (this.isLoading()) {
+      return;
+    }
+
+    this.currencyMenuOpen.update((open) => !open);
+  }
+
+  selectCurrency(code: string): void {
+    this.form.controls.currency.setValue(code);
+    this.form.controls.currency.markAsDirty();
+    this.currencyMenuOpen.set(false);
+  }
+
+  selectedCurrency(): Currency {
+    const selectedCode = this.form.controls.currency.value;
+    return this.currencies.find((currency) => currency.code === selectedCode) ?? this.currencies[0];
+  }
+
+  trackCurrency(_: number, currency: Currency): string {
+    return currency.code;
+  }
 
   onImageSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -46,7 +78,6 @@ export class ProductCreateComponent {
       this.productService['validateImageFile'](file);
       this.selectedImage.set(file);
 
-      // Create image preview
       const reader = new FileReader();
       reader.onload = (e) => {
         this.imagePreview.set(e.target?.result as string);
@@ -79,28 +110,25 @@ export class ProductCreateComponent {
     this.isLoading.set(true);
     this.errorMessage.set(null);
     this.successMessage.set(null);
+    this.currencyMenuOpen.set(false);
 
     try {
       const formValue = this.form.getRawValue();
       const productData: Omit<Product, 'id' | 'createdAt'> = {
         productName: formValue.productName,
         quality: Number(formValue.quality),
-        productImage: '', // Will be set after upload
+        productImage: '',
         productDescription: formValue.productDescription,
         amount: Number(formValue.amount),
         currency: formValue.currency
       };
 
-      const productId = await this.productService.createProduct(
-        productData,
-        this.selectedImage()!
-      );
+      await this.productService.createProduct(productData, this.selectedImage()!);
 
       this.successMessage.set('Product created successfully!');
       this.form.reset({ currency: 'USD' });
       this.clearImage();
 
-      // Redirect to product list after 2 seconds
       setTimeout(() => {
         this.router.navigate(['/admin/products']);
       }, 2000);

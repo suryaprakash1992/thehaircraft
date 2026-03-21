@@ -22,6 +22,9 @@
       <a routerLink="/payment-info" routerLinkActive="active">Payment</a>
       <a routerLink="/shipping" routerLinkActive="active">Shipping</a>
       <a routerLink="/contact" routerLinkActive="active">Contact</a>
+      @if (authService.isAdmin()) {
+        <a routerLink="/admin" routerLinkActive="active">Admin</a>
+      }
     </nav>
 
     <form class="search desktop-search" (submit)="runSearch($event)">
@@ -60,6 +63,9 @@
           @if (dropdownOpen()) {
             <div class="dropdown-menu">
               <a routerLink="/account" (click)="closeDropdown()">My Account</a>
+              @if (authService.isAdmin()) {
+                <a routerLink="/admin" (click)="closeDropdown()">Admin Dashboard</a>
+              }
               <button type="button" (click)="logout()" class="logout-btn">Logout</button>
             </div>
           }
@@ -91,6 +97,9 @@
       <a routerLink="/payment-info" (click)="toggleMenu()">Payment</a>
       <a routerLink="/shipping" (click)="toggleMenu()">Shipping</a>
       <a routerLink="/contact" (click)="toggleMenu()">Contact</a>
+      @if (authService.isAdmin()) {
+        <a routerLink="/admin" (click)="toggleMenu()">Admin</a>
+      }
     </div>
   }
 </header>

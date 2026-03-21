@@ -103,8 +103,8 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    // canActivate: [adminGuard],
-    loadChildren: () => import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES)
+    canActivate: [adminGuard],
+    loadChildren: () => import('./features/admin/admin.module').then((m) => m.AdminModule)
   },
   { path: '**', redirectTo: '' }
 ];

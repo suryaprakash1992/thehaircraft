@@ -24,21 +24,28 @@ export class AuthService {
     authState(this.auth).pipe(
       switchMap((authUser) => {
         if (!authUser) return of(null);
-        
-        // Fetch user data from Firestore
+
         return from(this.getUserFromFirestore(authUser.uid)).pipe(
-          map((firestoreUser) => firestoreUser || {
-            id: authUser.uid,
-            displayName: authUser.displayName ?? 'HAIRCRAFT Client',
-            email: authUser.email ?? '',
-            photoUrl: authUser.photoURL ?? undefined
-          } as AppUser),
-          catchError(() => of({
-            id: authUser.uid,
-            displayName: authUser.displayName ?? 'HAIRCRAFT Client',
-            email: authUser.email ?? '',
-            photoUrl: authUser.photoURL ?? undefined
-          } as AppUser))
+          map(
+            (firestoreUser) =>
+              firestoreUser ||
+              ({
+                id: authUser.uid,
+                displayName: authUser.displayName ?? 'HAIRCRAFT Client',
+                email: authUser.email ?? '',
+                isAdmin: false,
+                photoUrl: authUser.photoURL ?? undefined
+              } as AppUser)
+          ),
+          catchError(() =>
+            of({
+              id: authUser.uid,
+              displayName: authUser.displayName ?? 'HAIRCRAFT Client',
+              email: authUser.email ?? '',
+              isAdmin: false,
+              photoUrl: authUser.photoURL ?? undefined
+            } as AppUser)
+          )
         );
       }),
       catchError(() => of(null))
@@ -48,18 +55,20 @@ export class AuthService {
 
   readonly user = computed(() => this.authUser());
   readonly isAuthenticated = computed(() => !!this.user());
+  readonly isAdmin = computed(() => this.user()?.isAdmin === true);
 
   private async getUserFromFirestore(uid: string): Promise<AppUser | null> {
     try {
       const userDocRef = doc(this.firestore, 'users', uid);
       const userSnapshot = await getDoc(userDocRef);
-      
+
       if (userSnapshot.exists()) {
         const data = userSnapshot.data();
         return {
           id: uid,
           displayName: data['name'] || 'THEHAIRCRAFT Client',
           email: data['email'] || '',
+          isAdmin: data['isAdmin'] === true,
           photoUrl: data['photoUrl'] || undefined,
           provider: data['provider'] || 'email'
         };
@@ -80,6 +89,7 @@ export class AuthService {
     await this.saveUserToFirestore(credential.user.uid, {
       displayName,
       email,
+      isAdmin: false,
       photoUrl: credential.user.photoURL ?? undefined,
       provider: 'email'
     });
@@ -93,6 +103,7 @@ export class AuthService {
       await this.handleSocialSignIn(credential.user.uid, {
         displayName: credential.user.displayName ?? 'Google User',
         email: credential.user.email ?? '',
+        isAdmin: false,
         photoUrl: credential.user.photoURL ?? undefined,
         provider: 'google'
       });
@@ -112,6 +123,7 @@ export class AuthService {
       await this.handleSocialSignIn(credential.user.uid, {
         displayName: credential.user.displayName ?? 'Facebook User',
         email: credential.user.email ?? '',
+        isAdmin: false,
         photoUrl: credential.user.photoURL ?? undefined,
         provider: 'facebook'
       });
@@ -131,6 +143,7 @@ export class AuthService {
       await this.saveUserToFirestore(credential.user.uid, {
         displayName: credential.user.displayName ?? 'Google User',
         email: credential.user.email ?? '',
+        isAdmin: false,
         photoUrl: credential.user.photoURL ?? undefined,
         provider: 'google'
       });
@@ -150,6 +163,7 @@ export class AuthService {
       await this.saveUserToFirestore(credential.user.uid, {
         displayName: credential.user.displayName ?? 'Facebook User',
         email: credential.user.email ?? '',
+        isAdmin: false,
         photoUrl: credential.user.photoURL ?? undefined,
         provider: 'facebook'
       });
@@ -166,6 +180,7 @@ export class AuthService {
     userData: {
       displayName: string;
       email: string;
+      isAdmin: boolean;
       photoUrl?: string;
       provider: 'google' | 'facebook';
     }
@@ -179,6 +194,7 @@ export class AuthService {
           uid,
           name: userData.displayName,
           email: userData.email,
+          isAdmin: userData.isAdmin,
           photoUrl: userData.photoUrl || null,
           provider: userData.provider,
           createdAt: serverTimestamp(),
@@ -202,6 +218,7 @@ export class AuthService {
     userData: {
       displayName: string;
       email: string;
+      isAdmin: boolean;
       photoUrl?: string;
       provider: 'email' | 'google' | 'facebook';
     }
@@ -209,12 +226,13 @@ export class AuthService {
     try {
       const userRef = doc(this.firestore, 'users', uid);
       const userSnapshot = await getDoc(userRef);
-      
+
       if (!userSnapshot.exists()) {
         await setDoc(userRef, {
           uid,
           name: userData.displayName,
           email: userData.email,
+          isAdmin: userData.isAdmin,
           photoUrl: userData.photoUrl || null,
           provider: userData.provider,
           createdAt: serverTimestamp()
