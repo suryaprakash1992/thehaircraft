@@ -86,6 +86,20 @@ export class HomePageComponent {
         'https://firebasestorage.googleapis.com/v0/b/the-haircraft.firebasestorage.app/o/hair-craft-videos%2FIndian%20Natural%20curly%20hair%20bundles.MOV?alt=media&token=3b3ccbeb-3a42-41f3-98b3-c6c311aa2605',
         'https://firebasestorage.googleapis.com/v0/b/the-haircraft.firebasestorage.app/o/hair-craft-videos%2FIndian%20Natural%20curly%20hair%20bundles2.mp4?alt=media&token=5035a0e2-0dd7-4a9e-b0ae-be44bd091974'
       ]
+    },
+    {
+      id: 'c5',
+      title: 'Natural Grey Hair',
+      description: 'Discover timeless elegance with our Natural Grey Hair Wig, made from 100% authentic Indian human hair. Perfect for those who embrace natural beauty or want a sophisticated salt-and-pepper or fully grey look, this wig offers a realistic appearance with naturally blended grey strands.',
+      price: 'From $119',
+      type: 'Swiss Lace',
+      image: 'assets/images/indian-curly-hair-.jpg',
+      video:
+        'https://firebasestorage.googleapis.com/v0/b/the-haircraft.firebasestorage.app/o/hair-craft-videos%2FNatural%20Grey%20hair.mp4?alt=media&token=adba5ef8-430e-4af7-91e5-5dc90aa5f05e',
+      videos: [
+        'https://firebasestorage.googleapis.com/v0/b/the-haircraft.firebasestorage.app/o/hair-craft-videos%2FNatural%20Grey%20hair.mp4?alt=media&token=adba5ef8-430e-4af7-91e5-5dc90aa5f05e',
+        'https://firebasestorage.googleapis.com/v0/b/the-haircraft.firebasestorage.app/o/hair-craft-videos%2FNatural%20Grey%20hair.mp4?alt=media&token=adba5ef8-430e-4af7-91e5-5dc90aa5f05e'
+      ]
     }
   ];
 
